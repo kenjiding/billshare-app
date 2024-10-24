@@ -1,0 +1,36 @@
+<script>
+
+
+  class Nexta {
+    queue = [];
+    async run() {
+      while (this.queue.length) {
+        const res = await new Promise((next) => {
+          const fn = this.queue.shift();
+          if (fn) {
+            fn(next);
+          }
+        });
+      }
+    }
+    add(fn) {
+      this.queue.push(fn);
+    }
+  }
+
+  const i = new Nexta();
+
+  i.add(async (next) => {
+    console.log('add: ', 1);
+    // await next();
+    console.log('minus: ', 1);
+  });
+
+  i.add(async (next) => {
+    console.log('add: ', 2);
+    await next();
+    console.log('minus: ', 2);
+  });
+
+  i.run();
+</script>
