@@ -19,7 +19,7 @@ const Menus = [
     icon: <MaterialCommunityIcons name="file-table-outline" size={24} color="#6c6c6c" />,
     name: 'Bill management',
     path: '/billManagementScreen',
-    role: ['tenant'],
+    role: ['manager', 'tenant'],
   },
   {
     icon: <MaterialIcons name="house" size={26} color="#6c6c6c" />,

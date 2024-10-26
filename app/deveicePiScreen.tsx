@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { getFacilities } from '@/service/facilities'; // 假设你有 startDevice 和 stopDevice API
 import CommonWraper from '@/components/CommonWraper';
 import { categoryMap } from '@/constants/icon';
-import Toast from 'react-native-toast-message'; // 引入 Toast
 import DeviceItem from '@/components/DeviceItem';
 import { useUserStore } from '@/store';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -35,13 +34,6 @@ const DeveicePiScreen: React.FC<DeviceScreenProps> = (props) => {
       await new Promise((resolve) => {
         setTimeout(resolve, 1000);
       });
-      Toast.show({
-        type: 'success',
-        text1: 'Start deveice successfully',
-        visibilityTime: 2000,
-        position: 'bottom',
-        autoHide: true,
-      });
     } catch (error) {
       console.error('Error starting device:', error);
     } finally {
@@ -55,13 +47,6 @@ const DeveicePiScreen: React.FC<DeviceScreenProps> = (props) => {
     try {
       await new Promise((resolve) => {
         setTimeout(resolve, 1000);
-      });
-      Toast.show({
-        type: 'success',
-        text1: 'Stop deveice successfully',
-        visibilityTime: 2000,
-        position: 'bottom',
-        autoHide: true,
       });
     } catch (error) {
       console.error('Error stopping device:', error);
@@ -82,7 +67,6 @@ const DeveicePiScreen: React.FC<DeviceScreenProps> = (props) => {
 
   return (
     <CommonWraper>
-      <Toast />
       <View className='p-5'>
         {
           devices.map((item, index) => {

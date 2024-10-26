@@ -1,4 +1,5 @@
 import { useUserStore } from '@/store';
+import { getHostUrl } from './helper';
 
 interface RequestInit {
   method?: string;
@@ -16,7 +17,7 @@ interface RequestInit {
   ignore?: boolean
 }
 
-const HOST = `http://${process.env.EXPO_PUBLIC_HOST_IP}:${process.env.EXPO_PUBLIC_HOST_PORT}`;//192.168.1.105
+const HOST = getHostUrl('http://');
 
 function objectToQueryString(obj: Record<string, string | number>): string {
   const keyValuePairs: string[] = [];
@@ -40,6 +41,7 @@ class Request {
       ...configs.data,
       userId: user.userId
     };
+
     const method = configs.method?.toLowerCase();
     if (method === 'get') {
       url += `?${objectToQueryString(tempData)}`;
@@ -52,6 +54,7 @@ class Request {
     }
   
     delete configs.data;
+    console.log('HOST + url: ', HOST + url);
   
     return fetch(HOST + url, {
       // cache: 'no-cache',

@@ -3,9 +3,10 @@ import Request from '@/utils/request';
 
 
 export interface IBill {
+  _id: string,
   propertyId: string,
   utilityType: '',
-  totalCost: string,
+  totalCost: number,
   billingPeriod: {
     startDate: string,
     endDate: string,

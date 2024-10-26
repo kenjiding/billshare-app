@@ -102,7 +102,7 @@ const FaceUpload: React.FC<FaceUploadProps> = ({
   }
 
   const beforeRemove = () => {
-    data.id && onRemove && onRemove(data.id);
+    data.propertyId && onRemove && onRemove(data.propertyId);
   }
 
   const facilityClick = (item: IFacilities) => {

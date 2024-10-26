@@ -16,6 +16,7 @@ import { useSocket } from '../../hooks/useSocket'; // 确保路径正确
 import { resourceUsage } from '@/components/ResourceUsage';
 import { catchJsonExep } from '@utils/helper';
 import { CategoryEnum } from '@/components/BillUtility';
+import { useToast } from 'react-native-toast-notifications';
 
 const mockResourceUsageList = [
   {
@@ -75,6 +76,7 @@ const mockResourceUsageList = [
 ];
 
 export default function HomeScreen() {
+  const toast = useToast();
   const { user, isManager } = useUserStore();
   const [refreshing, setRefreshing] = useState(false);
   const router = useRouter();
@@ -131,15 +133,15 @@ export default function HomeScreen() {
     if (user.role !== 'tenant') return;
     if (!user.userId) return;
     // 测试逻辑
-    // const electricityEventName = 'bill/electricity/66f937983ff9b42ba26ffdbb';
+    const electricityEventName = 'bill/electricity/66f937983ff9b42ba26ffdbb';
     // 正常逻辑
-    const electricityEventName = `bill/electricity/${user.userId}`;
+    // const electricityEventName = `bill/electricity/${user.userId}`;
     const waterEventName = `bill/water/${user.userId}`;
     const gasEventName = `bill/gas/${user.userId}`;
 
     function updateBillPayments(type: string) {
-      return (data: any) => {
-        const result = catchJsonExep(data, 'parse');
+      return async (data: any) => {
+        const result = await catchJsonExep<any>(data, 'parse');
         setTenantData([
           ...tenantData, 
           {
@@ -148,6 +150,15 @@ export default function HomeScreen() {
             date: result.dueDate
           }
         ]);
+        toast.show(<View className='flex-row items-center justify-center text-lg'>
+          <Text>Bill <Text className=''>{type}</Text> payment received: </Text>
+          <Text className='text-lg font-bold text-white'>${result.cost}</Text>
+        </View>, {
+          type: 'success',
+          placement: 'top',
+          duration: 4000,
+          animationType: 'slide-in',
+        });
       }
     }
     socket.on(electricityEventName, updateBillPayments('electricity'));
@@ -159,7 +170,7 @@ export default function HomeScreen() {
       socket.off(waterEventName);
       socket.off(gasEventName);
     }
-  }, [user, tenantData]);
+  }, [user, tenantData, toast]);
 
 
   useEffect(() => {

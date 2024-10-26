@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { getFacilities } from '@/service/facilities'; // 假设你有 startDevice 和 stopDevice API
 import CommonWraper from '@/components/CommonWraper';
 import { categoryMap } from '@/constants/icon';
-import Toast from 'react-native-toast-message'; // 引入 Toast
 import DeviceItem from '@/components/DeviceItem';
 
 type DeviceListProps = {

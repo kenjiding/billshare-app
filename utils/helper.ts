@@ -17,19 +17,24 @@ export function catchError<T, U extends object = Error> (
     });
 }
 
-export function catchJsonExep(data: any, type?: 'parse' | 'stringify') {
-  let transformData = data;
-  try {
-    if (type === 'parse') {
-      transformData = JSON.parse(data);
-    } else {
-      transformData = JSON.stringify(data);
+export function catchJsonExep<T>(data: any, type?: 'parse' | 'stringify'): Promise<T> {
+  return new Promise((resolve, reject) => {
+    let transformData = data;
+    try {
+      if (type === 'parse') {
+        transformData = JSON.parse(data);
+      } else {
+        transformData = JSON.stringify(data);
+      }
+      resolve(transformData);
+    } catch (e) {
+      reject(e);
     }
-  } catch (e) {
-    console.error(e);
-  }
+  });
+}
 
-  return transformData;
+export function getHostUrl(protocol: string = '') {
+  return process.env.EXPO_PUBLIC_HOST;
 }
 
 

@@ -1,5 +1,5 @@
-import { useEffect, useState } from'react';
 import io, { Socket } from 'socket.io-client';
+import { getHostUrl } from '@/utils/helper';
 
 interface ISocketErrorParams {
   attemptNumber?: number;
@@ -10,11 +10,7 @@ interface ISocketSuccessParams {
   attemptNumber: number;
 }
 
-const SERVER_URL = `ws://${process.env.EXPO_PUBLIC_HOST_IP}:${process.env.EXPO_PUBLIC_HOST_PORT}`;
-const testPropertyId = '66e03fa47b0629a80fb56f43'; // same as test_mqtt_client.py for testing purposes
-const testUtility = 'electricity';
-
-const testUsageEvent = testPropertyId + '/' + testUtility;
+const SERVER_URL = process.env.EXPO_PUBLIC_WS_HOST;
 
 let socket: Socket | null = null;
 

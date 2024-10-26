@@ -29,6 +29,7 @@ export default function Login() {
       text: 'Logining...'
     });
     const [err, data] = await catchError<any>(login(loginForm));
+    console.log('err, data: ', err, data);
     updateLoading({
       loading: false,
     });
